@@ -32,5 +32,5 @@ setup(
     platforms=release_info["PLATFORMS"],
     extras_require=release_info["EXTRA_REQUIRES"],
     install_requires=release_info["REQUIRES"],
-    scripts=["piws/piws_setup.py"]
+    scripts=["piws_setup/piws_setup.py"]
 )

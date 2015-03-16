@@ -13,7 +13,7 @@ imaging studies.
 How to
 ======
 
-Execute the piws_setup command:
+Execute the piws_setup.py command:
 
 ::
 
