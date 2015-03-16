@@ -322,7 +322,7 @@ pypi_tools = json_data["pypi_tools"]
 logger.info("Installing python modules...")
 for tool_name in pypi_tools:
     logger.info("    > %s.", tool_name)
-    cmd = ["pip", "install", tool_name]
+    cmd = ["pip", "install", "--user", tool_name]
     check_call_with_log(cmd)
 
 # > export extra cubes

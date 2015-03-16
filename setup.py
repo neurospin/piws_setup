@@ -29,8 +29,9 @@ setup(
     version=release_info["VERSION"],
     url=release_info["URL"],
     packages=find_packages(),
+    package_data={"piws_setup.configs": ["*.conf"]},
     platforms=release_info["PLATFORMS"],
     extras_require=release_info["EXTRA_REQUIRES"],
     install_requires=release_info["REQUIRES"],
-    scripts=["piws_setup/piws_setup.py"]
+    scripts=["piws_setup/piws_setup"]
 )
