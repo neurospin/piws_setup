@@ -8,8 +8,8 @@
 ##########################################################################
 
 # Capsul current version
-version_major = 0
-version_minor = 1
+version_major = 1
+version_minor = 0
 version_micro = 0
 
 # The following variables are here for backward compatibility in order to
@@ -24,7 +24,7 @@ __version__ = "{0}.{1}.{2}".format(version_major, version_minor, version_micro)
 # Expected by setup.py: the status of the project
 CLASSIFIERS = ["Development Status :: 5 - Production/Stable",
                "Environment :: Console",
-               "Operating System :: Linux",
+               "Operating System :: Unix",
                "Programming Language :: Python",
                "Topic :: Scientific/Engineering",
                "Topic :: Utilities"]
