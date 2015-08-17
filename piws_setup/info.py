@@ -10,7 +10,7 @@
 # Capsul current version
 version_major = 1
 version_minor = 0
-version_micro = 0
+version_micro = 1
 
 # The following variables are here for backward compatibility in order to
 # ease a transition for bv_maker users. They will be removed in a few days.
