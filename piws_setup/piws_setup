@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 ##########################################################################
-# NSAp - Copyright (C) CEA, 2013
+# NSAp - Copyright (C) CEA, 2013-2015
 # Distributed under the terms of the CeCILL-B license, as published by
 # the CEA-CNRS-INRIA. Refer to the LICENSE file or to
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
@@ -93,9 +93,9 @@ def check_configuration_integrity(json_data, file_name):
 
     Parameters
     ----------
-    json_data : dict
+    json_data: dict
         data to be checked.
-    file_name : string
+    file_name: string
         path to the file the json_data was loaded from.
     """
     expected_types = {
@@ -126,23 +126,23 @@ def check_configuration_integrity(json_data, file_name):
 
 
 def load_configuration(file_name):
-    """ Loads data from a json configuration file and checks its integrity.
+    """ Loads data from a JSON configuration file and checks its integrity.
 
     Parameters
     ----------
-    file_name : string
-        the path to the json file to be loaded.
+    file_name: string
+        the path to the JSON file to be loaded.
 
     Returns
     -------
-    json_data : dict
+    json_data: dict
         the configuration object.
     """
     try:
         with open(file_name) as json_file:
             json_data = json.load(json_file)
     except IOError:
-        logger.info("Unable to load Json file %s", file_name)
+        logger.info("Unable to load JSON file %s", file_name)
         sys.exit()
     else:
         check_configuration_integrity(json_data, file_name)
@@ -206,85 +206,82 @@ def choose_version_to_install(config_folder):
 
 def check_call_with_log(command, **kwargs):
     """ Performs a similar call as check_call but writes command output and
-    status to the terminal with different logging levels.
+    status to the terminal and a log file, with different logging levels.
 
     Parameters
     ----------
-    command : string
+    command: list of str
         the command to be executed.
-    kwargs : dict
-        extra arguments passed to subprocess such as execution directory (cwd).
+    kwargs: dict
+        extra arguments such as execution directory (cwd).
     """
+    # Print debug message
     logger.debug("--- COMMAND ---")
-    logger.debug(" ".join(command))
-    logger.debug("CWD =" + kwargs.get("cwd", os.getcwd()))
+    logger.debug(" ".join(repr(i) for i in command))
+    logger.debug("CWD = " + kwargs.get("cwd", os.getcwd()))
     logger.debug("--- OUTPUT ---")
 
-    # Call the command in a subprocess
-    p = subprocess.Popen(command,
-                         stdout=subprocess.PIPE,
-                         stderr=subprocess.PIPE,
-                         **kwargs)
-    stdout, stderr = p.communicate()
+    # Execute the command
+    stdout = subprocess.check_output(command, **kwargs)
 
-    # Log the process return set
+    # Print debug message
     if stdout:
         logger.debug(stdout)
-    if stderr:
-        logger.error(stderr)
-    logger.debug("--- COMMAND STATUS = %s ---", p.returncode)
-
-    # Reproduce the check_call behaviour
-    if p.returncode:
-        raise subprocess.CalledProcessError(p.returncode, command)
 
 
-def hg_dl(package_url, package_name, package_version, package_folder):
-    """ Clone a mercurial reporsitory and set the required version.
+def hg_dl(hg_repo, package_name, destination_folder, tag=None):
+    """
+    Downloads a mercurial CubicWeb cube from the Logilab server.
 
     Parameters
     ----------
-    package_url : string
-        the package url.
-    package_name : string
-        the package name.
-    package_version: string
-        the package version.
-    package_folder: string
-        the path where the package is cloned.
+    hg_repo: string
+        the hg repository url.
+    package_name: string
+        the package name to be downloaded.
+    destination_folder: string
+        the path to download folder.
+    forge: string
+        the forge to use.
+    tag: string (optional, default None)
+        an eventual specific commit number.
     """
     # Clone the repository
-    cmd = ["hg", "clone", package_url, package_folder]
+    cmd = ["hg", "clone", hg_repo,
+           os.path.join(destination_folder, package_name)]
     check_call_with_log(cmd)
 
-    # Update to specified version
-    if package_version is not None:
-        cmd = ["hg", "update", "--cwd", package_folder, package_version]
+    # Update to specified commit number
+    if tag is not None:
+        cube_path = os.path.join(destination_folder, package_name)
+        cmd = ["hg", "update", "--cwd", cube_path, tag]
         check_call_with_log(cmd)
 
 
-def git_dl(package_url, package_name, package_version, package_folder):
-    """ Clone a git reporsitory and set the required version.
+def git_dl(git_repo, package_name, destination_folder, tag=None):
+    """
+    Downloads a git repository from its location.
 
     Parameters
     ----------
-    package_url : string
-        the package url.
-    package_name : string
-        the package name.
-    package_version: string
-        the package version.
-    package_folder: string
-        the path where the package is cloned.
+    git_repo: string
+        the git repository url.
+    package_name: string
+        the package name to be downloaded.
+    destination_folder: string
+        the path to the folder files are downloaded.
+    tag: string (optional, default None)
+        an eventual specific commit number.
     """
     # Clone the repository
-    cmd = ["git", "clone", package_url, package_folder]
-    check_call_with_log(cmd)
+    cmd = ["git", "clone", git_repo]
+    check_call_with_log(cmd, cwd=destination_folder)
 
-    # Update to specified version
-    if package_version is not None:
-        cmd = ["git", "checkout", package_version]
-        check_call_with_log(cmd, cwd=package_folder)
+    # Update to specified commit number
+    if tag is not None:
+        cmd = ["git", "reset", "--hard", "tags/{0}".format(tag)]
+        check_call_with_log(
+            cmd, cwd=os.path.join(destination_folder, package_name))
 
 
 ############################################################################
@@ -330,8 +327,8 @@ for tool_name in pypi_tools:
 # > export extra cubes
 logger.info("Exporting cubes in '%s'...", cubes_path)
 for repo_type, cubes in [("hg", hg_cubes), ("git", git_cubes)]:
-    for package_url, package_item in cubes.items():
-        package_name, package_version, cube_relative_path = package_item
+    for package_url, (package_name, package_version,
+                      cube_relative_path) in cubes.items():
         cube_folder = os.path.join(cubes_path, package_name)
         package_folder = os.path.join(options.clone_directory, package_name)
         package_cube_folder = os.path.join(package_folder, cube_relative_path)

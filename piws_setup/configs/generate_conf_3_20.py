@@ -16,7 +16,7 @@ To fill with the values corresponding to the CW version.
 import json
 
 # Define the cw setup version
-version = "3.19"
+version = "3.20"
 
 # Define cubes versioned with mercurial
 hg_cubes = {
@@ -27,7 +27,7 @@ hg_cubes = {
     "http://hg.logilab.org/review/cubes/card":
         ("card", "cubicweb-card-version-0.5.3", ""),
     "http://hg.logilab.org/review/cubes/comment":
-        ("comment", "cubicweb-comment-version-1.10.0", ""),
+        ("comment", "cubicweb-comment-version-1.11.1", ""),
     "http://hg.logilab.org/review/cubes/file":
         ("file", "cubicweb-file-version-1.16.0", ""),
     "http://hg.logilab.org/review/cubes/forgotpwd":
@@ -43,7 +43,7 @@ hg_cubes = {
     "http://hg.logilab.org/review/cubes/preview":
         ("preview", "cubicweb-preview-version-1.1.0", ""),
     "http://hg.logilab.org/review/cubes/questionnaire":
-        ("questionnaire", "cubicweb-questionnaire-version-0.6.0", ""),
+        ("questionnaire", "cubicweb-questionnaire-version-0.7.0", ""),
     "http://hg.logilab.org/review/cubes/squareui":
         ("squareui", "cubicweb-squareui-version-0.3.3", ""),
     "http://hg.logilab.org/review/cubes/seo":
@@ -61,18 +61,15 @@ hg_cubes = {
 # Define cubes versioned with git
 git_cubes = {
     "https://github.com/neurospin/rql_download.git":
-        ("rql_download", None, "rql_download"),
+        ("rql_download", "v1.2.0", "rql_download"),
     "https://github.com/neurospin/rql_upload.git":
-        ("rql_upload", None, "rql_upload"),
+        ("rql_upload", "v1.0.1", "rql_upload"),
     "https://github.com/neurospin/piws.git":
-        ("piws", None, "piws"),
+        ("piws", "v1.1.1", "piws"),
 }
 
 # Python tools installed with 'pip'
-pypi_tools = [
-    "pyasn1",
-    "pygraphviz"
-]
+pypi_tools = []
 
 # Save the configuration
 json_data = {
