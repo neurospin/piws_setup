@@ -368,3 +368,8 @@ for repo_type, cubes in [("hg", hg_cubes), ("git", git_cubes)]:
             else:
                 raise Exception("'{0}' folder do not contain a cube, please "
                                 "investigate.".format(cube_folder))
+
+# > create a python module
+initfile = os.path.join(cubes_path, "__init__.py")
+if not os.path.isfile(initfile):
+    os.mknod(initfile)
