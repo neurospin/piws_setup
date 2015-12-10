@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 ##########################################################################
-# NSAp - Copyright (C) CEA, 2013
+# NSAp - Copyright (C) CEA, 2013-2015
 # Distributed under the terms of the CeCILL-B license, as published by
 # the CEA-CNRS-INRIA. Refer to the LICENSE file or to
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
@@ -9,8 +9,8 @@
 
 # Capsul current version
 version_major = 1
-version_minor = 0
-version_micro = 1
+version_minor = 1
+version_micro = 0
 
 # The following variables are here for backward compatibility in order to
 # ease a transition for bv_maker users. They will be removed in a few days.
@@ -24,7 +24,7 @@ __version__ = "{0}.{1}.{2}".format(version_major, version_minor, version_micro)
 # Expected by setup.py: the status of the project
 CLASSIFIERS = ["Development Status :: 5 - Production/Stable",
                "Environment :: Console",
-               "Operating System :: Unix",
+               "Operating System :: Linux",
                "Programming Language :: Python",
                "Topic :: Scientific/Engineering",
                "Topic :: Utilities"]

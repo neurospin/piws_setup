@@ -1,14 +1,14 @@
 #! /usr/bin/env python
 ##########################################################################
-# NSAp - Copyright (C) CEA, 2013
+# NSAp - Copyright (C) CEA, 2013-2015
 # Distributed under the terms of the CeCILL-B license, as published by
 # the CEA-CNRS-INRIA. Refer to the LICENSE file or to
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
 # for details.
 ##########################################################################
 
-""" Script to generate a json CubicWeb configuration file containing
-dependencies used by the CW environment installer cw_install.py.
+""" Script to generate a JSON CubicWeb configuration file containing
+dependencies used by the CW environment installer 'piws_setup'.
 To fill with the values corresponding to the CW version.
 """
 
@@ -16,9 +16,9 @@ To fill with the values corresponding to the CW version.
 import json
 
 # Define the cw setup version
-version = "3.19"
+version = "3.20"
 
-
+# Define cubes versioned with mercurial
 hg_cubes = {
     "http://hg.logilab.org/review/cubes/bootstrap":
         ("bootstrap", "cubicweb-bootstrap-version-0.6.3", ""),
@@ -27,7 +27,7 @@ hg_cubes = {
     "http://hg.logilab.org/review/cubes/card":
         ("card", "cubicweb-card-version-0.5.3", ""),
     "http://hg.logilab.org/review/cubes/comment":
-        ("comment", "cubicweb-comment-version-1.10.0", ""),
+        ("comment", "cubicweb-comment-version-1.11.1", ""),
     "http://hg.logilab.org/review/cubes/file":
         ("file", "cubicweb-file-version-1.16.0", ""),
     "http://hg.logilab.org/review/cubes/forgotpwd":
@@ -43,7 +43,7 @@ hg_cubes = {
     "http://hg.logilab.org/review/cubes/preview":
         ("preview", "cubicweb-preview-version-1.1.0", ""),
     "http://hg.logilab.org/review/cubes/questionnaire":
-        ("questionnaire", "cubicweb-questionnaire-version-0.6.0", ""),
+        ("questionnaire", "cubicweb-questionnaire-version-0.7.0", ""),
     "http://hg.logilab.org/review/cubes/squareui":
         ("squareui", "cubicweb-squareui-version-0.3.3", ""),
     "http://hg.logilab.org/review/cubes/seo":
@@ -58,25 +58,29 @@ hg_cubes = {
         ("rqlcontroller", "cubicweb-rqlcontroller-version-0.1.0", ""),
 }
 
+# Define cubes versioned with git
 git_cubes = {
     "https://github.com/neurospin/rql_download.git":
-        ("rql_download", None, "rql_download"),
+        ("rql_download", "v1.2.1", "rql_download"),
     "https://github.com/neurospin/rql_upload.git":
-        ("rql_upload", None, "rql_upload"),
-    #"https://github.com/neurospin/piws.git":
-    #    ("piws", None, "piws"),
+        ("rql_upload", "v1.0.2", "rql_upload"),
+    "https://github.com/neurospin/piws.git":
+        ("piws", "v1.1.2", "piws"),
 }
 
+# Python tools installed with 'pip'
 pypi_tools = [
-    "pyasn1"
+    "pyasn1",
+    "twisted",
+    "cwbrowser"
 ]
 
+# Save the configuration
 json_data = {
     "version": version,
     "hg_cubes": hg_cubes,
     "git_cubes": git_cubes,
     "pypi_tools": pypi_tools
 }
-
 with open("{0}.conf".format(version), "w") as open_file:
-    json.dump(json_data, open_file)
+    json.dump(json_data, open_file, indent=4)
