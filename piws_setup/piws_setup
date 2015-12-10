@@ -336,17 +336,17 @@ for repo_type, cubes in [("hg", hg_cubes), ("git", git_cubes)]:
         if not os.path.lexists(cube_folder):
             if not os.path.isdir(package_folder):
                 if repo_type == "hg":
-                    hg_dl(package_url, package_name, package_version,
-                          package_folder)
+                    hg_dl(package_url, package_name, options.clone_directory,
+                          package_version)
                 elif repo_type == "git":
-                    git_dl(package_url, package_name, package_version,
-                           package_folder)
+                    git_dl(package_url, package_name, options.clone_directory,
+                          package_version)
                 else:
                     raise Exception(
                         "Unknown '{0}' repository type.".format(repo_type))
             else:
                 pkginfo = os.path.join(package_cube_folder, "__pkginfo__.py")
-                if os .path.isfile(pkginfo):
+                if os.path.isfile(pkginfo):
                     cube_info = {}
                     execfile(pkginfo, cube_info)
                     logger.info("Cube '%s' already cloned with version '%s', "
