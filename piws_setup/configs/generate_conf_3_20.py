@@ -71,7 +71,8 @@ git_cubes = {
 # Python tools installed with 'pip'
 pypi_tools = [
     "pyasn1",
-    "twisted"
+    "twisted",
+    "cwbrowser"
 ]
 
 # Save the configuration
