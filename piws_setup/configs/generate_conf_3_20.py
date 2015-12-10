@@ -61,15 +61,18 @@ hg_cubes = {
 # Define cubes versioned with git
 git_cubes = {
     "https://github.com/neurospin/rql_download.git":
-        ("rql_download", "v1.2.0", "rql_download"),
+        ("rql_download", "v1.2.1", "rql_download"),
     "https://github.com/neurospin/rql_upload.git":
-        ("rql_upload", "v1.0.1", "rql_upload"),
+        ("rql_upload", "v1.0.2", "rql_upload"),
     "https://github.com/neurospin/piws.git":
-        ("piws", "v1.1.1", "piws"),
+        ("piws", "v1.1.2", "piws"),
 }
 
 # Python tools installed with 'pip'
-pypi_tools = []
+pypi_tools = [
+    "pyasn1",
+    "twisted"
+]
 
 # Save the configuration
 json_data = {
