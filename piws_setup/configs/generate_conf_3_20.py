@@ -65,14 +65,15 @@ git_cubes = {
     "https://github.com/neurospin/rql_upload.git":
         ("rql_upload", "v1.0.2", "rql_upload"),
     "https://github.com/neurospin/piws.git":
-        ("piws", "v1.1.2", "piws"),
+        ("piws", "v1.1.3", "piws"),
 }
 
 # Python tools installed with 'pip'
 pypi_tools = [
     "pyasn1",
     "twisted",
-    "cwbrowser"
+    "cwbrowser",
+    "nibabel"
 ]
 
 # Save the configuration
